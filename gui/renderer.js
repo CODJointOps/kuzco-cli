@@ -17,13 +17,18 @@ function displayMessage(message, sender) {
 document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chatForm');
     const promptInput = document.getElementById('promptInput');
+    const modelSelect = document.getElementById('modelSelect');
     const sendButton = document.getElementById('sendButton');
+    const modelSelectionContainer = document.getElementById('modelSelectionContainer');
 
-    if (chatForm && promptInput) {
+    if (chatForm && promptInput && modelSelect) {
         chatForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+
             const userInput = promptInput.value;
+            const selectedModel = modelSelect.value;
             promptInput.value = '';
+            modelSelectionContainer.style.display = 'none';
 
             sendButton.disabled = true;
             promptInput.disabled = true;
@@ -33,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const typingIndicator = displayTypingIndicator();
 
             try {
-                const response = await window.electronAPI.sendPrompt(userInput);
+                const response = await window.electronAPI.sendPrompt(userInput, selectedModel);
                 const assistantMessage = response.choices[0].message.content.trim();
                 displayMessage(assistantMessage, 'assistant');
             } catch (error) {

@@ -72,6 +72,7 @@ app.on('window-all-closed', () => {
 
 const kuzcoCore = new KuzcoCore();
 
-ipcMain.handle('send-prompt', async (event, prompt) => {
-    return await kuzcoCore.sendPrompt(prompt);
+ipcMain.handle('send-prompt', async (event, { prompt, model }) => {
+    console.log("Received model in main process:", model);
+    return await kuzcoCore.sendPrompt(prompt, model);
 });

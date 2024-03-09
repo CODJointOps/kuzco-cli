@@ -36,7 +36,8 @@ class KuzcoCore {
         return fs.existsSync(this.configPath) && this.API_KEY !== '';
     }
 
-    async sendPrompt(prompt) {
+    async sendPrompt(prompt, model) {
+        console.log("Model received in sendPrompt:", model)
         try {
             const response = await fetch('https://relay.kuzco.xyz/v1/chat/completions', {
                 method: 'POST',
@@ -46,7 +47,7 @@ class KuzcoCore {
                 },
                 body: JSON.stringify({
                     messages: [{ role: 'user', 'content': prompt + '\n' }],
-                    model: 'mistral',
+                    model: model,
                     stream: false,
                 }),
             });
