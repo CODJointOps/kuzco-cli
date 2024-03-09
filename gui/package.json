@@ -14,13 +14,16 @@
     "dist-all": "electron-builder -mwl"
   },
   "build": {
-    "appId": "com.yourname.kuzco",
+    "appId": "com.codjointops.kuzco",
     "productName": "KuzcoChat",
     "directories": {
       "output": "dist"
     },
     "files": [
       "**/*",
+      "css/**/*",
+      "js/**/*",
+      "html/**/*",
       "!**/*.ts",
       "!*.code-workspace",
       "!**/*.js.map",

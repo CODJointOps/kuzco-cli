@@ -2,21 +2,21 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const KuzcoCore = require('./kuzcoCore');
+const KuzcoCore = require('./js/kuzcoCore');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'js/preload.js'),
             nodeIntegration: false,
             contextIsolation: true,
             enableRemoteModule: false,
         },
     });
 
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile('html/index.html');
 
     if (!kuzcoCore.apiKeyExists()) {
         promptForApiKey(mainWindow);
@@ -44,7 +44,7 @@ let inputWindow;
 function promptForApiKey() {
     inputWindow = new BrowserWindow({
         width: 300,
-        height: 200,
+        height: 300,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -52,7 +52,7 @@ function promptForApiKey() {
         },
     });
 
-    inputWindow.loadFile('prompt.html');
+    inputWindow.loadFile('html/prompt.html');
     inputWindow.on('closed', () => {
         inputWindow = null;
     });

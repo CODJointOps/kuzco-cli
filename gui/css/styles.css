@@ -38,6 +38,16 @@ body {
     background-color: #6c757d;
     cursor: not-allowed;
 }
+#submitApiKey {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
 #stopButton {
     padding: 10px 20px;
     font-size: 1rem;
@@ -85,6 +95,15 @@ body {
     color: inherit;
     background-color: #2c3e50;
 }
+#apiKeyInput {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #34495e;
+    border-radius: 5px;
+    color: inherit;
+    background-color: #2c3e50;
+}
+
 #promptInput:focus {
     outline: none;
     box-shadow: 0 0 0 2px #007BFF;
