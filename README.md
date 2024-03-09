@@ -46,7 +46,7 @@ On first run, you'll be prompted to enter your API key for accessing Kuzco's net
 Run Kuzco CLI with:
 ```bash
 cd kuzco-cli/cli
-node main.js
+node kuzco-cli.js
 ```
 
 Run Kuzco GUI with:
