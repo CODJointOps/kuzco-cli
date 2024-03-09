@@ -17,12 +17,16 @@ function displayMessage(message, sender) {
 document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chatForm');
     const promptInput = document.getElementById('promptInput');
+    const sendButton = document.getElementById('sendButton');
 
     if (chatForm && promptInput) {
         chatForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const userInput = promptInput.value;
             promptInput.value = '';
+
+            sendButton.disabled = true;
+            promptInput.disabled = true;
 
             displayMessage(userInput, 'user');
 
@@ -33,6 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error(`Error sending prompt: ${error.message}`);
                 displayMessage(`Error: ${error.message}`, 'assistant');
+            } finally {
+                sendButton.disabled = false;
+                promptInput.disabled = false;
+                promptInput.focus();
             }
         });
     } else {

@@ -18,6 +18,24 @@ body {
     border: 1px solid #34495e;
     border-radius: 5px;
 }
+#sendButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+#sendButton:hover {
+    background-color: #0056b3;
+}
+
+#sendButton:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
 .message {
     font-size: 0.9em;
     padding: 5px 10px;
