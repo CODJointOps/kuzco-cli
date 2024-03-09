@@ -1,0 +1,56 @@
+{
+  "name": "kuzco-gui",
+  "version": "1.0.0",
+  "description": "Simple gui for kuzco api",
+  "author": "Wizzard",
+  "main": "kuzco-gui.js",
+  "homepage": "https://git.deadzone.lol/Wizzard/kuzco-cli",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist-linux": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.yourname.kuzco",
+    "productName": "KuzcoChat",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!*.code-workspace",
+      "!**/*.js.map",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{o,hprof,orig,pyc,pyo,rbc}",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,__pycache__,thumbs.db,.db,desktop.ini}"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "^22.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
+}

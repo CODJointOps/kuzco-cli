@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kuzco Chat</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Welcome to Kuzco Chat</h1>
+        </header>
+        <main id="chatHistory" class="chat-history">
+        </main>
+        <footer>
+            <form id="chatForm" class="chat-form">
+                <input id="promptInput" type="text" placeholder="Enter your prompt" autofocus>
+                <button type="submit" id="sendPrompt">Send</button>
+            </form>
+        </footer>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
