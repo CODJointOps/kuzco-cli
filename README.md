@@ -65,4 +65,6 @@ Your contributions are welcome!
 
 Kuzco CLI is released under the MIT license. Feel free to use, modify, and distribute it as you see fit.
 
-Enjoy harnessing the power of decentralized AI with Kuzco!
+## Prebuilt Binaries
+
+You can download prebuilt versions of this application from the [GitHub Actions page](https://github.com/CODJointOps/kuzco-cli/actions).
