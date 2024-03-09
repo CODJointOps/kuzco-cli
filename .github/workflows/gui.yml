@@ -3,13 +3,13 @@ name: GUI Build
 on: [push, pull_request]
 
 jobs:
-  build-linux:
+  build-linux-gui:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
@@ -25,30 +25,30 @@ jobs:
           tar czf linux-unpacked.tar.gz linux-unpacked
 
       - name: Upload Linux AppImage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KuzcoChat-Linux-Appimage
           path: gui/dist/*.AppImage
 
       - name: Upload Linux DEB
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KuzcoChat-DEB
           path: gui/dist/*.deb
 
       - name: Upload Linux Unpacked Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KuzcoChat-Linux-Unpacked
           path: gui/dist/linux-unpacked.tar.gz
 
-  build-windows:
+  build-windows-gui:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
@@ -63,13 +63,13 @@ jobs:
           Compress-Archive -Path gui/dist/win-unpacked/* -DestinationPath gui/dist/win-unpacked.zip
 
       - name: Upload Windows Executable
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KuzcoChat-Windows-EXE
           path: gui/dist/*.exe
 
       - name: Upload Windows Unpacked Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KuzcoChat-Windows-Unpacked
           path: gui/dist/win-unpacked.zip

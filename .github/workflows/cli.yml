@@ -3,14 +3,14 @@ name: CLI Build
 on: [push, pull_request]
 
 jobs:
-  build-and-upload:
+  build-cli:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
@@ -33,19 +33,19 @@ jobs:
           mv kuzco-cli-win.exe kuzco-cli-win-x64.exe
 
       - name: Upload Linux Executable
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: kuzco-cli-linux-x64
           path: cli/kuzco-cli-linux-x64
 
       - name: Upload macOS Executable
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: kuzco-cli-macos-x64
           path: cli/kuzco-cli-macos-x64
 
       - name: Upload Windows Executable
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: kuzco-cli-win-x64.exe
           path: cli/kuzco-cli-win-x64.exe
