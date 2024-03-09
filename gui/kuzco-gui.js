@@ -32,7 +32,10 @@ ipcMain.on('submit-api-key', (event, apiKey) => {
     }
 
     fs.writeFileSync(configPath, JSON.stringify({ API_KEY: apiKey }, null, 2), 'utf8');
-    event.sender.send('api-key-saved');
+    event.reply('api-key-saved');
+
+    app.relaunch();
+    app.quit();
 });
 
 
