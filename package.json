@@ -1,0 +1,22 @@
+{
+  "name": "kuzco-cli",
+  "version": "1.0.0",
+  "description": "A simple cli for kyzco api",
+  "main": "main.js",
+  "bin": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "pkg": {
+    "targets": [
+      "node14-linux-x64",
+      "node14-win-x64",
+      "node14-macos-x64"
+    ]
+  },
+  "dependencies": {
+    "got": "^14.2.1",
+    "node-fetch": "^2.6.7",
+    "prompt-sync": "^4.2.0"
+  }
+}
