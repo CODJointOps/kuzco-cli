@@ -1,0 +1,51 @@
+name: CLI Build
+
+on: [push, pull_request]
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies (CLI)
+        run: cd cli && npm install
+
+      - name: Install pkg globally
+        run: npm install -g pkg
+
+      - name: Build CLI executables
+        run: |
+          cd cli
+          pkg kuzco-cli.js --targets node18-linux-x64,node18-macos-x64,node18-win-x64
+
+      - name: Rename executables
+        run: |
+          cd cli
+          mv kuzco-cli-linux kuzco-cli-linux-x64
+          mv kuzco-cli-macos kuzco-cli-macos-x64
+          mv kuzco-cli-win.exe kuzco-cli-win-x64.exe
+
+      - name: Upload Linux Executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: kuzco-cli-linux-x64
+          path: cli/kuzco-cli-linux-x64
+
+      - name: Upload macOS Executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: kuzco-cli-macos-x64
+          path: cli/kuzco-cli-macos-x64
+
+      - name: Upload Windows Executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: kuzco-cli-win-x64.exe
+          path: cli/kuzco-cli-win-x64.exe
