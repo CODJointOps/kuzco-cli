@@ -41,7 +41,7 @@ class KuzcoCore {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        const timeoutId = setTimeout(() => controller.abort(), 25000);
 
         try {
             const response = await fetch('https://relay.kuzco.xyz/v1/chat/completions', {

@@ -91,7 +91,7 @@ async function main() {
                     messages: messages,
                     model: model
                 })
-            }, 15000);;
+            }, 25000);;
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

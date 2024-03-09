@@ -57,6 +57,10 @@ electron19 kuzco-gui.js
 
 Follow the on-screen prompts to send your AI prompts to the network.
 
+## Prebuilt Binaries
+
+You can download prebuilt versions of this application from the [GitHub Actions page](https://github.com/CODJointOps/kuzco-cli/actions).
+
 ## Contributing
 
 Your contributions are welcome!
@@ -64,7 +68,3 @@ Your contributions are welcome!
 ## License
 
 Kuzco CLI is released under the MIT license. Feel free to use, modify, and distribute it as you see fit.
-
-## Prebuilt Binaries
-
-You can download prebuilt versions of this application from the [GitHub Actions page](https://github.com/CODJointOps/kuzco-cli/actions).

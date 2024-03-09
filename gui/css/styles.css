@@ -8,6 +8,8 @@ body {
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #34495e #2c3e50;
 }
 #chatHistory {
     height: 300px;
@@ -38,7 +40,7 @@ body {
 }
 .message {
     font-size: 0.9em;
-    padding: 5px 10px;
+    padding: 10px 15px;
     margin-bottom: 15px;
     padding: 10px;
     background-color: #34495e;
@@ -64,6 +66,20 @@ body {
     color: inherit;
     background-color: #2c3e50;
 }
+#promptInput:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #007BFF;
+}
+header {
+    margin-bottom: 20px;
+}
+header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 0.5em;
+    background: #2980b9;
+    border-radius: 5px;
+}
 #sendPrompt {
     padding: 10px 20px;
     border: none;
@@ -76,7 +92,9 @@ body {
     margin-bottom: 20px;
     color: #ecf0f1;
 }
-
+#chatHistory, #promptInput, #modelSelect {
+    border: 2px solid #34495e;
+}
 #modelSelect {
     padding: 10px;
     border: 1px solid #34495e;
@@ -103,6 +121,22 @@ label {
     gap: 10px;
     margin-bottom: 10px;
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #2c3e50;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #34495e;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+  }
+
 @keyframes ellipsis {
     0%, 20% {
       content: '';
