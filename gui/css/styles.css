@@ -38,6 +38,25 @@ body {
     background-color: #6c757d;
     cursor: not-allowed;
 }
+#stopButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #c0392b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#stopButton:hover {
+    background-color: #a93226;
+}
+
+#stopButton:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
 .message {
     font-size: 0.9em;
     padding: 10px 15px;

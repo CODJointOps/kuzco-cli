@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const promptInput = document.getElementById('promptInput');
     const modelSelect = document.getElementById('modelSelect');
     const sendButton = document.getElementById('sendButton');
+    const stopButton = document.getElementById('stopButton');
     const modelSelectionContainer = document.getElementById('modelSelectionContainer');
 
     if (chatForm && promptInput && modelSelect) {
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sendButton.disabled = true;
             promptInput.disabled = true;
+            stopButton.disabled = false;
 
             displayMessage(userInput, 'user');
 
@@ -49,15 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayMessage(`Error: ${error.message}`, 'assistant');
             } finally {
                 typingIndicator.remove();
-
                 sendButton.disabled = false;
                 promptInput.disabled = false;
                 promptInput.focus();
+                stopButton.disabled = true;
             }
         });
     } else {
         console.error('chatForm or promptInput elements not found!');
     }
+});
+
+document.getElementById('stopButton').addEventListener('click', () => {
+    window.electronAPI.abortPrompt();
+    document.getElementById('stopButton').disabled = true;
 });
 
 function displayTypingIndicator() {

@@ -14,6 +14,8 @@ class KuzcoCore {
     constructor() {
         this.configPath = path.join(os.homedir(), '.kuzco-cli', 'config.json');
         this.API_KEY = this.loadApiKey();
+        this.controller = new AbortController();
+        this.isAborted = false;
     }
 
     loadApiKey() {
@@ -36,12 +38,17 @@ class KuzcoCore {
         return fs.existsSync(this.configPath) && this.API_KEY !== '';
     }
 
+    abortFetch() {
+        this.isAborted = true;
+        this.controller.abort();
+    }
+
     async sendPrompt(prompt, model) {
         console.log("Model received in sendPrompt:", model)
-        const controller = new AbortController();
-        const signal = controller.signal;
+        this.controller = new AbortController();
+        const signal = this.controller.signal;
 
-        const timeoutId = setTimeout(() => controller.abort(), 25000);
+        const timeoutId = setTimeout(() => this.controller.abort(), 25000);
 
         try {
             const response = await fetch('https://relay.kuzco.xyz/v1/chat/completions', {
@@ -65,15 +72,19 @@ class KuzcoCore {
             }
 
             return await response.json();
+
         } catch (error) {
             clearTimeout(timeoutId);
-            if (error.name === 'AbortError') {
-                console.error('Request was aborted due to timeout.');
-                return { error: 'Request timed out. Please try again.' };
-            } else {
-                console.error(`An error occurred: ${error.message}`);
-                return { error: error.message };
-            }
+            const errorMessage = this.isAborted
+                ? 'Request aborted by the user. Please try again.'
+                : 'Request timed out. Please try again.';
+
+            this.isAborted = false;
+            this.controller = new AbortController();
+
+            return error.name === 'AbortError'
+                ? { error: errorMessage }
+                : { error: error.message };
         }
     }
 }

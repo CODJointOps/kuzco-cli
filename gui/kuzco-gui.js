@@ -76,3 +76,7 @@ ipcMain.handle('send-prompt', async (event, { prompt, model }) => {
     console.log("Received model in main process:", model);
     return await kuzcoCore.sendPrompt(prompt, model);
 });
+
+ipcMain.on('abort-prompt', () => {
+    kuzcoCore.abortFetch();
+});
