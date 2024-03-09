@@ -12,19 +12,28 @@ async function fetchData(url, options = {}) {
 
 class KuzcoCore {
     constructor() {
+        this.configPath = path.join(os.homedir(), '.kuzco-cli', 'config.json');
         this.API_KEY = this.loadApiKey();
     }
 
     loadApiKey() {
-        const configPath = path.join(os.homedir(), '.kuzco-cli', 'config.json');
         try {
-            const configFile = fs.readFileSync(configPath);
-            const config = JSON.parse(configFile);
-            return config.API_KEY;
+            if (fs.existsSync(this.configPath)) {
+                const configFile = fs.readFileSync(this.configPath);
+                const config = JSON.parse(configFile);
+                return config.API_KEY;
+            } else {
+                console.log('API Key config file does not exist. Please set up your API Key.');
+                return '';
+            }
         } catch (error) {
             console.error(`An error occurred while reading the API key: ${error.message}`);
             return '';
         }
+    }
+
+    apiKeyExists() {
+        return fs.existsSync(this.configPath) && this.API_KEY !== '';
     }
 
     async sendPrompt(prompt) {

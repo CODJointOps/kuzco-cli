@@ -1,4 +1,4 @@
 node_modules/
-kuzco-cli*
 gui/dist/
 *.exe
+

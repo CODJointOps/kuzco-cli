@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enter API Key</title>
+</head>
+<body>
+  <h1>Enter API Key</h1>
+  <input type="text" id="apiKeyInput" placeholder="API Key">
+  <button id="submitApiKey">Submit</button>
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    document.getElementById('submitApiKey').addEventListener('click', () => {
+      const apiKey = document.getElementById('apiKeyInput').value;
+      ipcRenderer.send('submit-api-key', apiKey);
+    });
+  </script>
+</body>
+</html>

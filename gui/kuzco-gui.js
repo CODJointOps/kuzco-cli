@@ -1,5 +1,7 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const KuzcoCore = require('./kuzcoCore');
 
 function createWindow() {
@@ -15,6 +17,42 @@ function createWindow() {
     });
 
     mainWindow.loadFile('index.html');
+
+    if (!kuzcoCore.apiKeyExists()) {
+        promptForApiKey(mainWindow);
+    }
+}
+
+ipcMain.on('submit-api-key', (event, apiKey) => {
+    const configDir = path.join(os.homedir(), '.kuzco-cli');
+    const configPath = path.join(configDir, 'config.json');
+
+    if (!fs.existsSync(configDir)){
+        fs.mkdirSync(configDir, { recursive: true });
+    }
+
+    fs.writeFileSync(configPath, JSON.stringify({ API_KEY: apiKey }, null, 2), 'utf8');
+    event.sender.send('api-key-saved');
+});
+
+
+let inputWindow;
+
+function promptForApiKey() {
+    inputWindow = new BrowserWindow({
+        width: 300,
+        height: 200,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
+        },
+    });
+
+    inputWindow.loadFile('prompt.html');
+    inputWindow.on('closed', () => {
+        inputWindow = null;
+    });
 }
 
 app.whenReady().then(() => {
