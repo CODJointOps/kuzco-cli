@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             displayMessage(userInput, 'user');
 
+            const typingIndicator = displayTypingIndicator();
+
             try {
                 const response = await window.electronAPI.sendPrompt(userInput);
                 const assistantMessage = response.choices[0].message.content.trim();
@@ -38,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error(`Error sending prompt: ${error.message}`);
                 displayMessage(`Error: ${error.message}`, 'assistant');
             } finally {
+                typingIndicator.remove();
+
                 sendButton.disabled = false;
                 promptInput.disabled = false;
                 promptInput.focus();
@@ -47,3 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('chatForm or promptInput elements not found!');
     }
 });
+
+function displayTypingIndicator() {
+    const chatHistory = document.getElementById('chatHistory');
+    const typingIndicator = document.createElement('div');
+    typingIndicator.classList.add('message', 'assistantMessage', 'ellipsis');
+    typingIndicator.textContent = 'Processing';
+    chatHistory.appendChild(typingIndicator);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+    return typingIndicator;
+}

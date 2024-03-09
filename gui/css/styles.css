@@ -72,3 +72,22 @@ body {
     background-color: #2980b9;
     color: #ecf0f1;
 }
+@keyframes ellipsis {
+    0%, 20% {
+      content: '';
+    }
+    40% {
+      content: '.';
+    }
+    60% {
+      content: '..';
+    }
+    80%, 100% {
+      content: '...';
+    }
+  }
+
+  .ellipsis::after {
+    content: '';
+    animation: ellipsis 2s infinite;
+  }
