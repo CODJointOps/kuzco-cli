@@ -3,13 +3,27 @@ function displayMessage(message, sender) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message');
 
+    const parts = message.split('```');
+    for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 0) {
+            const textPart = document.createElement('span');
+            textPart.textContent = parts[i];
+            messageDiv.appendChild(textPart);
+        } else {
+            const codeBlock = document.createElement('pre');
+            const code = document.createElement('code');
+            code.textContent = parts[i];
+            codeBlock.appendChild(code);
+            messageDiv.appendChild(codeBlock);
+        }
+    }
+
     if (sender === 'user') {
         messageDiv.classList.add('userMessage');
-    } else if (sender === 'assistant') {
+    } else {
         messageDiv.classList.add('assistantMessage');
     }
 
-    messageDiv.textContent = message;
     chatHistory.appendChild(messageDiv);
     chatHistory.scrollTop = chatHistory.scrollHeight;
 }
@@ -76,3 +90,10 @@ function displayTypingIndicator() {
     chatHistory.scrollTop = chatHistory.scrollHeight;
     return typingIndicator;
 }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'F11') {
+    e.preventDefault();
+    ipcRenderer.send('toggle-fullscreen');
+  }
+});
