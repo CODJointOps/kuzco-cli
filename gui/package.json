@@ -1,6 +1,6 @@
 {
   "name": "kuzco-gui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Simple gui for kuzco api",
   "author": "Wizzard <Wizzard@deadzone.lol>",
   "main": "kuzco-gui.js",

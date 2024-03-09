@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const response = await window.electronAPI.sendPrompt(userInput, selectedModel);
+                if (response.error) {
+                    throw new Error(response.error);
+                }
                 const assistantMessage = response.choices[0].message.content.trim();
                 displayMessage(assistantMessage, 'assistant');
             } catch (error) {

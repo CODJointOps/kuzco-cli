@@ -38,6 +38,11 @@ class KuzcoCore {
 
     async sendPrompt(prompt, model) {
         console.log("Model received in sendPrompt:", model)
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
+
         try {
             const response = await fetch('https://relay.kuzco.xyz/v1/chat/completions', {
                 method: 'POST',
@@ -50,7 +55,10 @@ class KuzcoCore {
                     model: model,
                     stream: false,
                 }),
+                signal: signal,
             });
+
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -58,8 +66,14 @@ class KuzcoCore {
 
             return await response.json();
         } catch (error) {
-            console.error(`An error occurred: ${error.message}`);
-            return { error: error.message };
+            clearTimeout(timeoutId);
+            if (error.name === 'AbortError') {
+                console.error('Request was aborted due to timeout.');
+                return { error: 'Request timed out. Please try again.' };
+            } else {
+                console.error(`An error occurred: ${error.message}`);
+                return { error: error.message };
+            }
         }
     }
 }
