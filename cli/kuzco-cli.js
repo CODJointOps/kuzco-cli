@@ -52,8 +52,26 @@ const askQuestion = (query) => {
     }));
 };
 
+const fetchWithTimeout = (url, options, timeout = 3000) => {
+    const timeoutPromise = new Promise((_, reject) => {
+        const id = setTimeout(() => {
+            clearTimeout(id);
+            reject(new Error('Request timed out'));
+        }, timeout);
+    });
+
+    return Promise.race([
+        fetch(url, options),
+        timeoutPromise
+    ]);
+};
+
 async function main() {
     let messages = [];
+
+    console.log("Please choose a model: 1 for Mistral, 2 for Llama2");
+    const modelChoice = prompt('Enter your choice (1 or 2): ');
+    const model = modelChoice === '2' ? 'llama2' : 'mistral';
 
     while (true) {
         const user_input = await askQuestion("User: ");
@@ -63,7 +81,7 @@ async function main() {
         messages.push({ 'role': 'user', 'content': user_input + '\n' });
 
         try {
-            const response = await fetch(`${BASE_URL}/chat/completions`, {
+            const response = await fetchWithTimeout(`${BASE_URL}/chat/completions`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${API_KEY}`,
@@ -71,17 +89,16 @@ async function main() {
                 },
                 body: JSON.stringify({
                     messages: messages,
-                    model: 'mistral',
-                    stream: false
+                    model: model
                 })
-            });
+            }, 15000);;
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
-            console.log(`\nKuzco (Mistral):\n\n${data.choices[0].message.content.trim()}\n`);
+            console.log(`\nKuzco (${model}):\n\n${data.choices[0].message.content.trim()}\n`);
         } catch (error) {
             console.error(`An error occurred: ${error.message}`);
         }
