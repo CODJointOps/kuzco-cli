@@ -2,7 +2,7 @@
   "name": "kuzco-gui",
   "version": "1.0.0",
   "description": "Simple gui for kuzco api",
-  "author": "Wizzard",
+  "author": "Wizzard <Wizzard@deadzone.lol>",
   "main": "kuzco-gui.js",
   "homepage": "https://git.deadzone.lol/Wizzard/kuzco-cli",
   "scripts": {
