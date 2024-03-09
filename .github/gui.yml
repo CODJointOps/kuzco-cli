@@ -1,0 +1,47 @@
+name: GUI Build and Package
+
+on: [push, pull_request]
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies (GUI)
+      run: cd gui && npm install
+
+    - name: Build for Linux
+      run: cd gui && npm run dist-linux
+
+    - name: Build for Windows
+      run: cd gui && npm run dist-win
+
+    - name: Package linux-unpacked
+      run: |
+        cd gui/dist/linux-unpacked
+        tar -cvJf linux-unpacked.tar.xz *
+        mv linux-unpacked.tar.xz ../
+
+    - name: Package win-unpacked
+      run: |
+        cd gui/dist/win-unpacked
+        zip -r win-unpacked.zip *
+        mv win-unpacked.zip ../
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: packaged-apps
+        path: |
+          gui/dist/*.AppImage
+          gui/dist/*.exe
+          gui/dist/*.deb
+          gui/dist/linux-unpacked.tar.xz
+          gui/dist/win-unpacked.zip
