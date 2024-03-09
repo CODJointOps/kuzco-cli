@@ -2,10 +2,10 @@
   "name": "kuzco-cli",
   "version": "1.0.0",
   "description": "A simple cli for kyzco api",
-  "main": "main.js",
-  "bin": "main.js",
+  "main": "kuzco-cli.js",
+  "bin": "kuzco-cli.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node kuzco-cli.js"
   },
   "pkg": {
     "targets": [
