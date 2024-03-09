@@ -1,47 +1,75 @@
-name: GUI Build and Package
+name: GUI Build
 
 on: [push, pull_request]
 
 jobs:
-  build-and-package:
+  build-linux:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-    - name: Install dependencies (GUI)
-      run: cd gui && npm install
+      - name: Install dependencies (GUI)
+        run: cd gui && npm install
 
-    - name: Build for Linux
-      run: cd gui && npm run dist-linux
+      - name: Build Linux Application
+        run: cd gui && npm run dist-linux
 
-    - name: Build for Windows
-      run: cd gui && npm run dist-win
+      - name: Archive Linux production build
+        run: |
+          cd gui/dist
+          tar czf linux-unpacked.tar.gz linux-unpacked
 
-    - name: Package linux-unpacked
-      run: |
-        cd gui/dist/linux-unpacked
-        tar -cvJf linux-unpacked.tar.xz *
-        mv linux-unpacked.tar.xz ../
+      - name: Upload Linux AppImage
+        uses: actions/upload-artifact@v2
+        with:
+          name: KuzcoChat-Linux
+          path: gui/dist/*.AppImage
 
-    - name: Package win-unpacked
-      run: |
-        cd gui/dist/win-unpacked
-        zip -r win-unpacked.zip *
-        mv win-unpacked.zip ../
+      - name: Upload Linux DEB
+        uses: actions/upload-artifact@v2
+        with:
+          name: KuzcoChat-DEB
+          path: gui/dist/*.deb
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: packaged-apps
-        path: |
-          gui/dist/*.AppImage
-          gui/dist/*.exe
-          gui/dist/*.deb
-          gui/dist/linux-unpacked.tar.xz
-          gui/dist/win-unpacked.zip
+      - name: Upload Linux Unpacked Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: KuzcoChat-Linux-Unpacked
+          path: gui/dist/linux-unpacked.tar.gz
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies (GUI)
+        run: cd gui && npm install
+
+      - name: Build Windows Application
+        run: cd gui && npm run dist-win
+
+      - name: Zip Windows production build
+        run: |
+          Compress-Archive -Path gui/dist/win-unpacked/* -DestinationPath gui/dist/win-unpacked.zip
+
+      - name: Upload Windows Executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: KuzcoChat-Windows-EXE
+          path: gui/dist/*.exe
+
+      - name: Upload Windows Unpacked Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: KuzcoChat-Windows-Unpacked
+          path: gui/dist/win-unpacked.zip
