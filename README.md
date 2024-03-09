@@ -19,10 +19,20 @@ Welcome to Kuzco CLI, a sleek Node.js-based interface for interacting with Kuzco
 1. Clone this repository and navigate into the directory:
    ```bash
    git clone https://git.deadzone.lol/Wizzard/kuzco-cli.git
-   cd kuzco-cli
+   cd kuzco-cli/cli
    ```
 
 2. Install the necessary Node.js dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Installing the GUI:
+   ```bash
+   cd kuzco-cli/gui
+   ```
+
+4. Install the necessary Node.js dependencies:
    ```bash
    npm install
    ```
@@ -35,7 +45,14 @@ On first run, you'll be prompted to enter your API key for accessing Kuzco's net
 
 Run Kuzco CLI with:
 ```bash
+cd kuzco-cli/cli
 node main.js
+```
+
+Run Kuzco GUI with:
+```bash
+cd kuzco-cli/gui
+electron19 kuzco-gui.js
 ```
 
 Follow the on-screen prompts to send your AI prompts to the network.
